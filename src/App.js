@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {
+    Router,
+    Route,
+    IndexRoute,
+    browserHistory
+} from "react-router";
+
+import Layout from "./layouts/Layout";
+import PageNotFound from "./pages/PageNotFound";
+import Main from './pages/Main';
+
+import Comments from './pages/Comments';
+import Users from './pages/Users';
+import Posts from './pages/Posts';
+
+import Comment from './pages/Comment';
+import User from './pages/User';
+import Post from './pages/Post';
+
+class App extends React.Component{
+    render(){
+        return <Router history={browserHistory}>
+                <Route path="/" component={Layout} >
+                    <IndexRoute component={Main} />
+                    <Route path="/comments" component={Comments}>
+                        <Route path=":commentId" component={Comment}/>
+                    </Route>
+                    <Route path="/posts" component={Posts}>
+                        <Route path=":postId" component={Post}/>
+                    </Route>
+                    <Route path="/users" component={Users}>
+                        <Route path=":userId" component={User}/>
+                    </Route>
+                    <Route path="*" component={PageNotFound}/>
+                </Route>
+            </Router>
+    }
 }
 
 export default App;
